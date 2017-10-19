@@ -1,20 +1,27 @@
 export const CAT_IMAGES_REQUESTED = 'cats/CAT_IMAGES_REQUESTED';
 export const CAT_IMAGES_RECEIVED = 'cats/CAT_IMAGES_RECEIVED';
+export const CAT_IMAGES_REQUEST_FAILED = 'cats/CAT_IMAGES_REQUEST_FAILED';
 
 // actions
-export const requestCatImages = () => {
+export const requestCatImages = count => {
+  if (typeof count === 'undefined') count = 1;
+
   return dispatch => {
     dispatch({
       type: CAT_IMAGES_REQUESTED
     });
 
-    fetch('http://thecatapi.com/api/images/get').then(response => {
-      console.log('response', response);
-      dispatch({
-        type: CAT_IMAGES_RECEIVED,
-        payload: response
-      });
-    });
+    fetch(`http://thecatapi.com/api/images/get?size=small&results_per_page=${count}`)
+      .then(
+        response => {
+          console.log('response', response);
+          dispatch({
+            type: CAT_IMAGES_RECEIVED,
+            payload: response
+          });
+        },
+        err => dispatch({ type: CAT_IMAGES_REQUEST_FAILED, err })
+      );
   };
 };
 
