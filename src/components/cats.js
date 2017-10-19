@@ -26,7 +26,7 @@ export const requestCatImages = count => {
 };
 
 const initialState = {
-  catImages: {},
+  catImages: [],
   isRequesting: false
 };
 
@@ -39,11 +39,24 @@ export default (state = initialState, action) => {
         isRequesting: true
       };
     case CAT_IMAGES_RECEIVED:
+      const newCatImage = {
+        url: action.payload.url,
+        text: action.payload.url
+      }
       return {
         ...state,
         isRequesting: false,
-        catImages: action.payload
+        catImages: [
+          ...state.catImages,
+          newCatImage
+        ]
       };
+    case CAT_IMAGES_REQUEST_FAILED:
+      console.log('action.err', action.err);
+      return {
+        ...state,
+        isRequesting: false
+      }
     default:
       return state;
   }
