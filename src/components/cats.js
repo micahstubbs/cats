@@ -1,11 +1,6 @@
 export const CAT_IMAGES_REQUESTED = 'cats/CAT_IMAGES_REQUESTED';
 export const CAT_IMAGES_RECEIVED = 'cats/CAT_IMAGES_RECEIVED';
 
-const initialState = {
-  catImages: {},
-  isRequesting: false
-};
-
 // actions
 export const requestCatImages = () => {
   return dispatch => {
@@ -21,6 +16,11 @@ export const requestCatImages = () => {
       });
     });
   };
+};
+
+const initialState = {
+  catImages: {},
+  isRequesting: false
 };
 
 // reducers
