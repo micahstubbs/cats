@@ -3,6 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { requestCatImages } from '../../components/cats';
 
+const Card = props => (
+  <div>
+    <img src={props.url} alt={props.text}></img>
+    <p>{props.text}</p>
+  </div>
+)
+
 const Cats = props => (
   <div>
     <h1>Cats</h1>
@@ -11,7 +18,7 @@ const Cats = props => (
         show me some cats
       </button>
     </p>
-    <img src={props.catImages.url}></img>
+    <Card url={props.catImages.url} text={props.catImages.url} />
   </div>
 );
 
