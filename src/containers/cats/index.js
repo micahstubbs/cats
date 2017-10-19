@@ -1,5 +1,4 @@
 import React from 'react';
-import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { requestCatImages } from '../../components/cats';
@@ -12,11 +11,13 @@ const Cats = props => (
         show me some cats
       </button>
     </p>
+    <img src={props.catImages.url}></img>
   </div>
 );
 
 const mapStateToProps = state => ({
-  isRequesting: state.cats.isRequesting
+  isRequesting: state.cats.isRequesting,
+  catImages: state.cats.catImages
 });
 
 const mapDispatchToProps = dispatch =>
