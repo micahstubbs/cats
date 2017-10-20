@@ -5,7 +5,7 @@ import {
   requestCatImages,
   requestCatFacts,
   removeCatImage,
-  removeCatFact
+  removeCatFact,
 } from '../../components/cats';
 
 const Card = props => (
@@ -15,7 +15,7 @@ const Card = props => (
   </div>
 );
 
-const Cards = props => {
+const Cards = (props) => {
   console.log('props from Cards', props);
   const cardComponents = props.cardData.map((d, i) => (
     <Card url={d.imageUrl} text={d.fact} key={i} />
@@ -27,6 +27,11 @@ class Cats extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log('nextProps from componentWillUpdate', nextProps);
+    // console.log('nextState from componentWillUpdate', nextState);
   }
 
   showCat(props) {
@@ -41,18 +46,15 @@ class Cats extends Component {
     removeCatFact();
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    console.log('nextProps from componentWillUpdate', nextProps);
-    // console.log('nextState from componentWillUpdate', nextState);
-  }
-
   render() {
-    const { requestCatImages, isRequesting, catImages, catFacts } = this.props;
+    const {
+      requestCatImages, isRequesting, catImages, catFacts,
+    } = this.props;
     console.log('catImages', catImages);
     console.log('catFacts', catFacts);
     const cardData = catImages.map((image, i) => ({
       imageUrl: image.url,
-      fact: catFacts[i]
+      fact: catFacts[i],
     }));
     return (
       <div>
@@ -68,7 +70,7 @@ class Cats extends Component {
             hide a cat
           </button>
         </p>
-        {/*<Card url={catImages.url} text={catImages.url} />*/}
+        {/* <Card url={catImages.url} text={catImages.url} /> */}
         <div>
           <Cards cardData={cardData} />
         </div>
@@ -80,7 +82,7 @@ class Cats extends Component {
 const mapStateToProps = state => ({
   isRequesting: state.cats.isRequesting,
   catImages: state.cats.catImages,
-  catFacts: state.cats.catFacts
+  catFacts: state.cats.catFacts,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -89,9 +91,9 @@ const mapDispatchToProps = dispatch =>
       requestCatImages,
       requestCatFacts,
       removeCatImage,
-      removeCatFact
+      removeCatFact,
     },
-    dispatch
+    dispatch,
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cats);

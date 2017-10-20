@@ -4,62 +4,54 @@ export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED';
 export const DECREMENT = 'counter/DECREMENT';
 
 // actions
-export const increment = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    });
+export const increment = () => (dispatch) => {
+  dispatch({
+    type: INCREMENT_REQUESTED,
+  });
 
-    dispatch({
-      type: INCREMENT
-    });
-  };
+  dispatch({
+    type: INCREMENT,
+  });
 };
 
-export const incrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    });
+export const incrementAsync = () => (dispatch) => {
+  dispatch({
+    type: INCREMENT_REQUESTED,
+  });
 
-    return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
-      });
-    }, 3000);
-  };
+  return setTimeout(() => {
+    dispatch({
+      type: INCREMENT,
+    });
+  }, 3000);
 };
 
-export const decrement = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    });
+export const decrement = () => (dispatch) => {
+  dispatch({
+    type: DECREMENT_REQUESTED,
+  });
 
-    dispatch({
-      type: DECREMENT
-    });
-  };
+  dispatch({
+    type: DECREMENT,
+  });
 };
 
-export const decrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    });
+export const decrementAsync = () => (dispatch) => {
+  dispatch({
+    type: DECREMENT_REQUESTED,
+  });
 
-    return setTimeout(() => {
-      dispatch({
-        type: DECREMENT
-      });
-    }, 3000);
-  };
+  return setTimeout(() => {
+    dispatch({
+      type: DECREMENT,
+    });
+  }, 3000);
 };
 
 const initialState = {
   count: 0,
   isIncrementing: false,
-  isDecrementing: false
+  isDecrementing: false,
 };
 
 // reducers
@@ -68,27 +60,27 @@ export default (state = initialState, action) => {
     case INCREMENT_REQUESTED:
       return {
         ...state,
-        isIncrementing: true
+        isIncrementing: true,
       };
 
     case INCREMENT:
       return {
         ...state,
         count: state.count + 1,
-        isIncrementing: !state.isIncrementing
+        isIncrementing: !state.isIncrementing,
       };
 
     case DECREMENT_REQUESTED:
       return {
         ...state,
-        isDecrementing: true
+        isDecrementing: true,
       };
 
     case DECREMENT:
       return {
         ...state,
         count: state.count - 1,
-        isDecrementing: !state.isDecrementing
+        isDecrementing: !state.isDecrementing,
       };
 
     default:

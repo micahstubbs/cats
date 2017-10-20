@@ -6,5 +6,5 @@ import cats from './cats';
 export default combineReducers({
   router: routerReducer,
   counter,
-  cats
+  cats,
 });

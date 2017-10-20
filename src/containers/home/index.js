@@ -1,13 +1,13 @@
-import React from 'react'
-import { push } from 'react-router-redux'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React from 'react';
+import { push } from 'react-router-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
   increment,
   incrementAsync,
   decrement,
-  decrementAsync
-} from '../../components/counter'
+  decrementAsync,
+} from '../../components/counter';
 
 const Home = props => (
   <div>
@@ -26,23 +26,23 @@ const Home = props => (
 
     <p><button onClick={() => props.changePage()}>Go to about page via redux</button></p>
   </div>
-)
+);
 
 const mapStateToProps = state => ({
   count: state.counter.count,
   isIncrementing: state.counter.isIncrementing,
-  isDecrementing: state.counter.isDecrementing
-})
+  isDecrementing: state.counter.isDecrementing,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   increment,
   incrementAsync,
   decrement,
   decrementAsync,
-  changePage: () => push('/about-us')
-}, dispatch)
+  changePage: () => push('/about-us'),
+}, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(Home)
+  mapDispatchToProps,
+)(Home);
