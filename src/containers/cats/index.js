@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { requestCatImages, requestCatFacts } from '../../components/cats';
+import {
+  requestCatImages,
+  requestCatFacts,
+  removeCatImage,
+  removeCatFact
+} from '../../components/cats';
 
 const Card = props => (
   <div>
@@ -24,10 +29,16 @@ class Cats extends Component {
     this.state = {};
   }
 
-  onClick(props) {
+  showCat(props) {
     const { requestCatImages, requestCatFacts } = this.props;
     requestCatImages();
     requestCatFacts();
+  }
+
+  hideCat(props) {
+    const { removeCatImage, removeCatFact } = this.props;
+    removeCatImage();
+    removeCatFact();
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -48,10 +59,13 @@ class Cats extends Component {
         <h1>Cats</h1>
         <p>
           <button
-            onClick={this.onClick.bind(this, this.props)}
+            onClick={this.showCat.bind(this, this.props)}
             disabled={isRequesting}
           >
             show me a cat
+          </button>
+          <button onClick={this.hideCat.bind(this, this.props)}>
+            hide a cat
           </button>
         </p>
         {/*<Card url={catImages.url} text={catImages.url} />*/}
@@ -73,7 +87,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       requestCatImages,
-      requestCatFacts
+      requestCatFacts,
+      removeCatImage,
+      removeCatFact
     },
     dispatch
   );

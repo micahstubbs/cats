@@ -4,6 +4,8 @@ export const CAT_IMAGES_REQUEST_FAILED = 'cats/CAT_IMAGES_REQUEST_FAILED';
 export const CAT_FACTS_REQUESTED = 'cats/CAT_FACTS_REQUESTED';
 export const CAT_FACTS_RECEIVED = 'cats/CAT_FACTS_RECEIVED';
 export const CAT_FACTS_REQUEST_FAILED = 'cats/CAT_FACTS_REQUEST_FAILED';
+export const REMOVE_CAT_IMAGE = 'cats/REMOVE_CAT_IMAGE';
+export const REMOVE_CAT_FACT = 'cats/REMOVE_CAT_FACT';
 
 // actions
 export const requestCatImages = count => {
@@ -38,18 +40,20 @@ export const requestCatFacts = count => {
     });
 
     const randomPage = Math.ceil(Math.random() * 731);
-    fetch(`http://www.catfact.info/api/v1/facts.json?page=${randomPage}&per_page=${1}`)
-    .then(response => response.json())
-    .then(
-      json => {
-        console.log('fact json', json);
-        dispatch({
-          type: CAT_FACTS_RECEIVED,
-          payload: json.facts[0]
-        });
-      },
-      err => dispatch({ type: CAT_FACTS_REQUEST_FAILED, err })
-    );
+    fetch(
+      `http://www.catfact.info/api/v1/facts.json?page=${randomPage}&per_page=${1}`
+    )
+      .then(response => response.json())
+      .then(
+        json => {
+          console.log('fact json', json);
+          dispatch({
+            type: CAT_FACTS_RECEIVED,
+            payload: json.facts[0]
+          });
+        },
+        err => dispatch({ type: CAT_FACTS_REQUEST_FAILED, err })
+      );
   };
 };
 
@@ -59,6 +63,22 @@ export const requestCatFacts = count => {
 //     dispatch(requestCatFacts())
 //   ]).then()
 // }
+
+export const removeCatImage = () => {
+  return dispatch => {
+    dispatch({
+      type: REMOVE_CAT_IMAGE
+    });
+  };
+};
+
+export const removeCatFact = () => {
+  return dispatch => {
+    dispatch({
+      type: REMOVE_CAT_FACT
+    });
+  };
+};
 
 const initialState = {
   catImages: [],
@@ -96,7 +116,7 @@ export default (state = initialState, action) => {
         isRequesting: true
       };
     case CAT_FACTS_RECEIVED:
-      console.log('action.payload from CAT_FACTS_RECEIVED', action.payload);
+      // console.log('action.payload from CAT_FACTS_RECEIVED', action.payload);
       return {
         ...state,
         isRequesting: false,
@@ -107,6 +127,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isRequesting: false
+      };
+    case REMOVE_CAT_IMAGE:
+      return {
+        ...state,
+        catImages: state.catImages.slice(0, -1)
+      };
+    case REMOVE_CAT_FACT:
+      return {
+        ...state,
+        catFacts: state.catFacts.slice(0, -1)
       };
     default:
       return state;
