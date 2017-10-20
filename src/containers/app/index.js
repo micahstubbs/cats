@@ -9,6 +9,7 @@ const App = () => (
     <header>
       <Link to="/">Home</Link>
       <Link to="/about-us">About</Link>
+      <Link to="/cats">Cats</Link>
     </header>
 
     <main>
