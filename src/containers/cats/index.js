@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { requestCatImages } from '../../components/cats';
+import { requestCatImages, requestCatFacts } from '../../components/cats';
 
 const Card = props => (
   <div>
@@ -23,6 +23,12 @@ class Cats extends Component {
     this.state = {};
   }
 
+  // onClick(props) {
+  //   const { requestCatImages, requestCatFacts } = this.props;
+  //   requestCatImages();
+  //   requestCatFacts();
+  // }
+
   componentWillUpdate(nextProps, nextState) {
     console.log('nextProps from componentWillUpdate', nextProps);
     console.log('nextState from componentWillUpdate', nextState);
@@ -35,7 +41,7 @@ class Cats extends Component {
       <div>
         <h1>Cats</h1>
         <p>
-          <button onClick={requestCatImages} disabled={isRequesting}>
+          <button onClick={this.onClick(this.props)} disabled={isRequesting}>
             show me a cat
           </button>
         </p>
@@ -50,13 +56,15 @@ class Cats extends Component {
 
 const mapStateToProps = state => ({
   isRequesting: state.cats.isRequesting,
-  catImages: state.cats.catImages
+  catImages: state.cats.catImages,
+  catFacts: state.cats.catFacts
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      requestCatImages
+      requestCatImages,
+      requestCatFacts
     },
     dispatch
   );
