@@ -23,11 +23,11 @@ class Cats extends Component {
     this.state = {};
   }
 
-  // onClick(props) {
-  //   const { requestCatImages, requestCatFacts } = this.props;
-  //   requestCatImages();
-  //   requestCatFacts();
-  // }
+  onClick(props) {
+    // const { requestCatImages, requestCatFacts } = this.props;
+    // requestCatImages();
+    // requestCatFacts();
+  }
 
   componentWillUpdate(nextProps, nextState) {
     console.log('nextProps from componentWillUpdate', nextProps);
