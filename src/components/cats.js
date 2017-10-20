@@ -37,12 +37,15 @@ export const requestCatFacts = count => {
       type: CAT_FACTS_REQUESTED
     });
 
-    fetch(`https://catfact.ninja/facts`).then(
-      response => {
-        console.log('fact response', response);
+    const randomPage = Math.ceil(Math.random() * 731);
+    fetch(`http://www.catfact.info/api/v1/facts.json?page=${randomPage}&per_page=${1}`)
+    .then(response => response.json())
+    .then(
+      json => {
+        console.log('fact json', json);
         dispatch({
           type: CAT_FACTS_RECEIVED,
-          payload: response.data
+          payload: json.facts[0]
         });
       },
       err => dispatch({ type: CAT_FACTS_REQUEST_FAILED, err })
@@ -50,8 +53,16 @@ export const requestCatFacts = count => {
   };
 };
 
+// export const requestCatData() {
+//   return dispatch => Promise.all([
+//     dispatch(requestCatImages()),
+//     dispatch(requestCatFacts())
+//   ]).then()
+// }
+
 const initialState = {
   catImages: [],
+  catFacts: [],
   isRequesting: false
 };
 
@@ -85,10 +96,11 @@ export default (state = initialState, action) => {
         isRequesting: true
       };
     case CAT_FACTS_RECEIVED:
+      console.log('action.payload from CAT_FACTS_RECEIVED', action.payload);
       return {
         ...state,
         isRequesting: false,
-        catFacts: [...state.catFacts, ...action.payload]
+        catFacts: [...state.catFacts, action.payload.details]
       };
     case CAT_FACTS_REQUEST_FAILED:
       console.error(action.err);

@@ -11,8 +11,9 @@ const Card = props => (
 );
 
 const Cards = props => {
+  console.log('props from Cards', props);
   const cardComponents = props.cardData.map((d, i) => (
-    <Card url={d.url} text={d.text} key={i} />
+    <Card url={d.imageUrl} text={d.fact} key={i} />
   ));
   return <div>{cardComponents}</div>;
 };
@@ -24,30 +25,38 @@ class Cats extends Component {
   }
 
   onClick(props) {
-    // const { requestCatImages, requestCatFacts } = this.props;
-    // requestCatImages();
-    // requestCatFacts();
+    const { requestCatImages, requestCatFacts } = this.props;
+    requestCatImages();
+    requestCatFacts();
   }
 
   componentWillUpdate(nextProps, nextState) {
     console.log('nextProps from componentWillUpdate', nextProps);
-    console.log('nextState from componentWillUpdate', nextState);
+    // console.log('nextState from componentWillUpdate', nextState);
   }
 
   render() {
-    const { requestCatImages, isRequesting, catImages } = this.props;
-
+    const { requestCatImages, isRequesting, catImages, catFacts } = this.props;
+    console.log('catImages', catImages);
+    console.log('catFacts', catFacts);
+    const cardData = catImages.map((image, i) => ({
+      imageUrl: image.url,
+      fact: catFacts[i]
+    }));
     return (
       <div>
         <h1>Cats</h1>
         <p>
-          <button onClick={this.onClick(this.props)} disabled={isRequesting}>
+          <button
+            onClick={this.onClick.bind(this, this.props)}
+            disabled={isRequesting}
+          >
             show me a cat
           </button>
         </p>
         {/*<Card url={catImages.url} text={catImages.url} />*/}
         <div>
-          <Cards cardData={catImages} />
+          <Cards cardData={cardData} />
         </div>
       </div>
     );
